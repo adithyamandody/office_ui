@@ -1,0 +1,38 @@
+.flexbox{
+    width:10rem;
+    height:10rem;
+    background-color: aqua;
+    margin:1rem;
+    text-align: center;
+}
+.container1{
+    border:3px solid deeppink;
+    display: flex;
+    flex-direction:row;
+    height:50vh;
+    width:80vh;
+    flex-wrap: wrap;
+    align-content:flex-start;
+    align-items: center;
+    justify-content: center;
+}
+.info{
+    display: grid;
+    align-content: center;
+}
+.price{
+    display: grid;
+    align-content: center;
+        grid-template: repeat(1,100px) / repeat(1,100px);
+        margin:10vh;
+  
+}
+.flex{
+    width:10rem;
+    margin:1rem;
+    line-height: 2.5;
+    text-align: center;
+}
+#box{
+    border:3px solid deeppink;
+}
