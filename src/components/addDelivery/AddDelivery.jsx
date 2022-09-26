@@ -51,7 +51,7 @@ export const AddDelivery = () => {
           />
           <br />
 
-          <input type='submit' value='Register' />
+          <input type='submit' value='submit' />
         </form>
       </div>
     </>
