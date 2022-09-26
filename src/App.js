@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AddDelivery } from './components/addDelivery/AddDelivery';
 import AddParty from './pages/AddParty/AddParty';
 import Home from './pages/home/Home';
 import Hotel from './pages/hotel/Hotel';
@@ -16,6 +17,7 @@ function App() {
         <Route path='/addParty' element={<AddParty />} />
         <Route path='/sales' element={<Sales />} />
         <Route path='/receipt' element={<Reciept />} />
+        <Route path='/addDelivery' element={<AddDelivery />} />
       </Routes>
     </BrowserRouter>
   );
