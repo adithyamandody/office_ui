@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './addparty.css';
 import { useNavigate } from 'react-router-dom';
+import { Dropdown } from 'semantic-ui-react';
+import _ from 'lodash';
 
 const AddParty = () => {
-  const url = 'http://localhost:8009/api/addparty';
+  const url1 = 'http://localhost:8009/api/addParty';
 
   const [name, setName] = useState('');
   const [phoneNumber, setPhone] = useState('');
@@ -20,9 +22,28 @@ const AddParty = () => {
 
   const navigate = useNavigate();
 
+  // const [data, setData] = useState('');
+  // const [response, setApiResponse] = useState('');
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await fetch(url)
+  //       .then((res) => setApiResponse(res.json()))
+  //       .catch((err) => console.warn(err));
+  //   };
+  //   fetchData();
+  // }, []);
+
+  // const addressDefinitions = response;
+  // console.log(addressDefinitions);
+  // const stateOptions = _.map(addressDefinitions.name, (name, index) => ({
+  //   key: addressDefinitions.state_abbr[index],
+  //   text: name,
+  // }));
+
   const addPartys = async (event) => {
     event.preventDefault();
-    const response = await fetch(url, {
+    const response = await fetch(url1, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,12 +115,14 @@ const AddParty = () => {
           onChange={(e) => setIdno(e.target.value)}
           placeholder='proof id no'
         />
-        <input
+        {/* <Dropdown
           type='text'
-          value={deliveryBoy}
+          search
+          selection
+          options={stateOptions}
           onChange={(e) => setDeliveryboy(e.target.value)}
           placeholder='delivery boy'
-        />
+        /> */}
         <input
           type='text'
           value={collectionBoy}
