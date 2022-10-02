@@ -1,31 +1,40 @@
-import React, { useState } from 'react';
-import './addparty.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useLayoutEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./addparty.css";
 
 const AddParty = () => {
-  const url = 'http://localhost:8009/api/addparty';
+  const url = "http://localhost:8009/api/addparty";
 
-  const [name, setName] = useState('');
-  const [phoneNumber, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [area, setArea] = useState('');
-  const [discount, setDiscount] = useState('');
-  const [proof, setProof] = useState('');
-  const [idno, setIdno] = useState('');
-  const [deliveryBoy, setDeliveryboy] = useState('');
-  const [collectionBoy, setCollectionBoy] = useState('');
-  const [openingBalance, setOpeningBalance] = useState('');
-  const [depocylamo, setDepocylamo] = useState('');
-  const [currentStock, setCurrentStock] = useState('');
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [area, setArea] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [proof, setProof] = useState("");
+  const [idno, setIdno] = useState("");
+  const [deliveryBoys, setDeliveryBoyData] = useState();
+  const [deliveryBoy, setDeliveryboy] = useState("");
+  const [collectionBoy, setCollectionBoy] = useState("");
+  const [openingBalance, setOpeningBalance] = useState("");
+  const [depocylamo, setDepocylamo] = useState("");
+  const [currentStock, setCurrentStock] = useState("");
 
+  useLayoutEffect(() => {
+    const fetchDelivery = async () => {
+      const response = await fetch("http://localhost:8009/api/getdelivery");
+      const data = await response.json();
+      setDeliveryBoyData(data);
+    };
+    fetchDelivery();
+  }, []);
   const navigate = useNavigate();
 
   const addPartys = async (event) => {
     event.preventDefault();
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name,
@@ -43,8 +52,8 @@ const AddParty = () => {
     });
     const data = await response.json();
 
-    if (data.message === 'jelole success') {
-      navigate('/addParty');
+    if (data.message === "jelole success") {
+      navigate("/addParty");
     } else {
       console.log(data.message);
     }
@@ -53,78 +62,85 @@ const AddParty = () => {
     <div>
       <form onSubmit={addPartys}>
         <input
-          type='text'
+          type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder='Name'
+          placeholder="Name"
         />
         <input
-          type='text'
+          type="text"
           value={phoneNumber}
           onChange={(e) => setPhone(e.target.value)}
-          placeholder='Phone'
+          placeholder="Phone"
         />
         <input
-          type='text'
+          type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          placeholder='address'
+          placeholder="address"
         />
         <input
-          type='text'
+          type="text"
           value={area}
           onChange={(e) => setArea(e.target.value)}
-          placeholder='area'
+          placeholder="area"
         />
         <input
-          type='text'
+          type="text"
           value={discount}
           onChange={(e) => setDiscount(e.target.value)}
-          placeholder='discount'
+          placeholder="discount"
         />
         <input
-          type='text'
+          type="text"
           value={proof}
           onChange={(e) => setProof(e.target.value)}
-          placeholder='proof'
+          placeholder="proof"
         />
         <input
-          type='text'
+          type="text"
           value={idno}
           onChange={(e) => setIdno(e.target.value)}
-          placeholder='proof id no'
+          placeholder="proof id no"
         />
-        <input
-          type='text'
+        <select
+          type="text"
           value={deliveryBoy}
           onChange={(e) => setDeliveryboy(e.target.value)}
-          placeholder='delivery boy'
-        />
+          placeholder="delivery boy"
+        >
+          {deliveryBoys &&
+            deliveryBoys.map((boy) => (
+              <option value={boy.name} key={boy._id}>
+                {boy.name}
+              </option>
+            ))}
+        </select>
         <input
-          type='text'
+          type="text"
           value={collectionBoy}
           onChange={(e) => setCollectionBoy(e.target.value)}
-          placeholder='collection Boy'
+          placeholder="collection Boy"
         />
         <input
-          type='text'
+          type="text"
           value={openingBalance}
           onChange={(e) => setOpeningBalance(e.target.value)}
-          placeholder='opening Balance'
+          placeholder="opening Balance"
         />
         <input
-          type='text'
+          type="text"
           value={depocylamo}
           onChange={(e) => setDepocylamo(e.target.value)}
-          placeholder='deposit cylinder amount'
+          placeholder="deposit cylinder amount"
         />
         <input
-          type='text'
+          type="text"
           value={currentStock}
           onChange={(e) => setCurrentStock(e.target.value)}
-          placeholder='current Stock'
+          placeholder="current Stock"
         />
-        <input type='submit' value='submit' />
+        <input type="submit" value="submit" />
       </form>
     </div>
   );
