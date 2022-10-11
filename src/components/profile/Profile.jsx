@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import './profile.css';
 
-const Profile = () => {
+const Profile = (props) => {
+  const url = 'http://localhost:8009/api/getpartybyid/633151619e34fa7b71029677';
+
+  const [respond, setRespond] = useState('');
+
+  useLayoutEffect(() => {
+    const fetchPartyById = async () => {
+      const response = await fetch(url);
+      const data = await response.json();
+      setRespond(data);
+    };
+    fetchPartyById();
+  }, []);
+  // event.preventDefault();
+  console.log(respond);
   return (
     <div>
-      <div class='container1'>
+      <div className='container1'>
         <div class='flexbox'>Image goes here</div>
         <div class='info'>
-          <p>Name</p>
-          <p>Address</p>
+          <p>{respond.name}</p>
+          <p>{respond.area}</p>
           <p id='box'>Delivery Boy</p>
           <p>Address</p>
           <p>Delivery Boy</p>

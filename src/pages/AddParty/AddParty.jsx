@@ -5,6 +5,8 @@ import './addparty.css';
 const AddParty = () => {
   const url = 'http://localhost:8009/api/addparty';
 
+  const [image, setImage] = useState('');
+
   const [name, setName] = useState('');
   const [phoneNumber, setPhone] = useState('');
   const [address, setAddress] = useState('');
@@ -88,6 +90,13 @@ const AddParty = () => {
   return (
     <div>
       <form onSubmit={addPartys}>
+        <input
+          type='image'
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+          placeholder='Image'
+          alt='images'
+        />
         <input
           type='text'
           value={name}
