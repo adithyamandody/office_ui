@@ -6,7 +6,7 @@ import Home from './pages/home/Home';
 import Hotel from './pages/hotel/Hotel';
 import List from './pages/list/List';
 import Reciept from './pages/Receipt/Reciept';
-import Sales from './pages/Sales/Sales';
+import Sale from './components/Sale/Sale';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Route path='/hotels' element={<List />} />
         <Route path='/hotels/:id' element={<Hotel />} />
         <Route path='/addParty' element={<AddParty />} />
-        <Route path='/sales' element={<Sales />} />
+        <Route path='/sales' element={<Sale />} />
         <Route path='/receipt' element={<Reciept />} />
         <Route path='/addDelivery' element={<AddDelivery />} />
         <Route path='/addArea' element={<AddArea />} />
