@@ -2,10 +2,14 @@ import { useLayoutEffect, useState } from 'react';
 
 const Sale = () => {
   const [name, setName] = useState('');
+  const [response, setResponse] = useState('');
+
   const [date, setDate] = useState('');
+  const [id, setId] = useState('');
+
   const [product, setProduct] = useState('');
   const [openBal, setOpeningBalance] = useState('');
-  const [discount, setDiscount] = useState('');
+  // const [discount, setDiscount] = useState('');
   const [openingStock, setOpeningStock] = useState('');
   const [full, setFull] = useState('');
   const [mt, setMt] = useState('');
@@ -25,6 +29,16 @@ const Sale = () => {
     };
     fetchArea();
   }, []);
+  // console.log(names);
+
+  const fetchdetails = async (props) => {
+    const url123 = `http://localhost:8009/api/getpartybyid/${props}`;
+
+    console.log(url123);
+    const response2 = await fetch(url123);
+    const data1 = await response2.json();
+    setResponse(data1);
+  };
 
   return (
     <form>
@@ -33,12 +47,15 @@ const Sale = () => {
       <select
         type='text'
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => {
+          setId(e.target.value);
+          fetchdetails(id);
+        }}
         placeholder='name'
       >
         {names &&
           names.map((name1) => (
-            <option value={name1.name} key={name1._id}>
+            <option value={name1._id} key={name1._id} id={name1.id}>
               {name1.name}
             </option>
           ))}
@@ -57,20 +74,20 @@ const Sale = () => {
       /> */}
       <input
         type='text'
-        value={product}
+        value={response.product}
         onChange={(e) => setProduct(e.target.value)}
         placeholder='product'
       />
 
       <input
         type='text'
-        value={names.closingBalance}
+        value={response.closingBalance}
         onChange={(e) => setOpeningBalance(e.target.value)}
         placeholder='opening balance'
       />
       <input
         type='text'
-        value={names.closingStock}
+        value={response.closingStock}
         onChange={(e) => setOpeningStock(e.target.value)}
         placeholder='opening stock'
       />
@@ -113,13 +130,13 @@ const Sale = () => {
       />
       <input
         type='text'
-        value={names.deliveryBoy}
+        value={response.deliveryBoy}
         onChange={(e) => setDeliveryboy(e.target.value)}
         placeholder='delivery boy'
       />
       <input
         type='text'
-        value={names.area}
+        value={response.area}
         onChange={(e) => setArea(e.target.value)}
         placeholder='area'
       />
