@@ -68,6 +68,7 @@ const AddParty = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        img,
         name,
         phoneNumber,
         address,
@@ -96,11 +97,12 @@ const AddParty = () => {
     <div>
       <form onSubmit={addPartys}>
         <input
-          type="image"
+          type="file"
           value={image}
           onChange={(e) => setImage(e.target.value)}
           placeholder="Image"
           alt="images"
+          accept="image/png, image/jpeg"
         />
         <input
           type="text"
@@ -181,15 +183,28 @@ const AddParty = () => {
           onChange={(e) => setOpeningBalance(e.target.value)}
           placeholder="opening Balance"
         />
-        <input
+        <select
           type="text"
           value={collectionBoy}
           onChange={(e) => setCollectionBoy(e.target.value)}
-          placeholder="Collection Boy"
-        />
+          placeholder="collection boy"
+          required
+        >
+          <option disabled value="">
+            Select
+          </option>
+
+          {deliveryBoys &&
+            deliveryBoys.map((boy) => (
+              <option value={boy.name} key={boy._id}>
+                {boy.name}
+              </option>
+            ))}
+        </select>
+
         <input
           type="text"
-          value={collectionBoy}
+          value={Product}
           onChange={(e) => setProduct(e.target.value)}
           placeholder="Product"
         />
@@ -207,7 +222,7 @@ const AddParty = () => {
         />
         <input
           type="text"
-          value={currentStock}
+          value={openingStock}
           onChange={(e) => setOpeningStock(e.target.value)}
           placeholder="opening Stock"
         />
