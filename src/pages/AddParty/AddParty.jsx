@@ -1,36 +1,38 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './addparty.css';
+import React, { useLayoutEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./addparty.css";
 
 const AddParty = () => {
-  const url = 'http://localhost:8009/api/addparty';
+  const url = "http://localhost:8009/api/addparty";
 
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState("");
 
-  const [name, setName] = useState('');
-  const [phoneNumber, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [area, setArea] = useState('');
-  const [discount, setDiscount] = useState('');
-  const [proof, setProof] = useState('');
-  const [idno, setIdno] = useState('');
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [area, setArea] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [proof, setProof] = useState("");
+  const [idno, setIdno] = useState("");
   const [deliveryBoys, setDeliveryBoyData] = useState();
-  const [deliveryBoy, setDeliveryboy] = useState('');
-  // const [collectionBoy, setCollectionBoy] = useState('');
-  const [openingBalance, setOpeningBalance] = useState('');
-  const [depocylamo, setDepocylamo] = useState('');
-  const [currentStock, setCurrentStock] = useState('');
-  const [areas, setAreaData] = useState('');
+  const [deliveryBoy, setDeliveryboy] = useState("");
+  const [collectionBoy, setCollectionBoy] = useState("");
+  const [openingStock, setOpeningStock] = useState();
+  const [Product, setProduct] = useState("");
+  const [openingBalance, setOpeningBalance] = useState("");
+  const [depocylamo, setDepocylamo] = useState("");
+  const [currentStock, setCurrentStock] = useState("");
+  const [areas, setAreaData] = useState("");
 
   useLayoutEffect(() => {
     const fetchDelivery = async () => {
-      const response = await fetch('http://localhost:8009/api/getdelivery');
+      const response = await fetch("http://localhost:8009/api/getdelivery");
       const data = await response.json();
       setDeliveryBoyData(data);
     };
     fetchDelivery();
     const fetchArea = async () => {
-      const response1 = await fetch('http://localhost:8009/api/getarea');
+      const response1 = await fetch("http://localhost:8009/api/getarea");
       const data = await response1.json();
       setAreaData(data);
     };
@@ -59,10 +61,11 @@ const AddParty = () => {
 
   const addPartys = async (event) => {
     event.preventDefault();
+
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name,
@@ -73,16 +76,18 @@ const AddParty = () => {
         proof,
         idno,
         deliveryBoy,
-        // collectionBoy,
+        collectionBoy,
+        openingStock,
         openingBalance,
         depocylamo,
         currentStock,
+        Product,
       }),
     });
     const data = await response.json();
 
-    if (data.message === 'jelole success') {
-      navigate('/addParty');
+    if (data.message === "jelole success") {
+      navigate("/addParty");
     } else {
       console.log(data.message);
     }
@@ -91,30 +96,34 @@ const AddParty = () => {
     <div>
       <form onSubmit={addPartys}>
         <input
-          type='image'
+          type="image"
           value={image}
           onChange={(e) => setImage(e.target.value)}
-          placeholder='Image'
-          alt='images'
+          placeholder="Image"
+          alt="images"
         />
         <input
-          type='text'
+          type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder='Name'
+          placeholder="Name"
         />
         <input
-          type='text'
+          type="text"
           value={phoneNumber}
           onChange={(e) => setPhone(e.target.value)}
-          placeholder='Phone'
+          placeholder="Phone"
         />
         <select
-          type='text'
+          type="text"
           value={area}
           onChange={(e) => setArea(e.target.value)}
-          placeholder='delivery boy'
+          placeholder="delivery boy"
+          required
         >
+          <option disabled value="">
+            Select
+          </option>
           {areas &&
             areas.map((boy) => (
               <option value={boy.name} key={boy._id}>
@@ -123,36 +132,41 @@ const AddParty = () => {
             ))}
         </select>
         <input
-          type='text'
+          type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          placeholder='address'
+          placeholder="address"
         />
 
         <input
-          type='text'
+          type="text"
           value={discount}
           onChange={(e) => setDiscount(e.target.value)}
-          placeholder='discount'
+          placeholder="discount"
         />
         <input
-          type='text'
+          type="text"
           value={proof}
           onChange={(e) => setProof(e.target.value)}
-          placeholder='proof'
+          placeholder="proof"
         />
         <input
-          type='text'
+          type="text"
           value={idno}
           onChange={(e) => setIdno(e.target.value)}
-          placeholder='proof id no'
+          placeholder="proof id no"
         />
         <select
-          type='text'
+          type="text"
           value={deliveryBoy}
           onChange={(e) => setDeliveryboy(e.target.value)}
-          placeholder='delivery boy'
+          placeholder="delivery boy"
+          required
         >
+          <option disabled value="">
+            Select
+          </option>
+
           {deliveryBoys &&
             deliveryBoys.map((boy) => (
               <option value={boy.name} key={boy._id}>
@@ -162,24 +176,42 @@ const AddParty = () => {
         </select>
 
         <input
-          type='text'
+          type="text"
           value={openingBalance}
           onChange={(e) => setOpeningBalance(e.target.value)}
-          placeholder='opening Balance'
+          placeholder="opening Balance"
         />
         <input
-          type='text'
+          type="text"
+          value={collectionBoy}
+          onChange={(e) => setCollectionBoy(e.target.value)}
+          placeholder="Collection Boy"
+        />
+        <input
+          type="text"
+          value={collectionBoy}
+          onChange={(e) => setProduct(e.target.value)}
+          placeholder="Product"
+        />
+        <input
+          type="text"
           value={depocylamo}
           onChange={(e) => setDepocylamo(e.target.value)}
-          placeholder='deposit cylinder amount'
+          placeholder="deposit cylinder amount"
         />
         <input
-          type='text'
+          type="text"
           value={currentStock}
           onChange={(e) => setCurrentStock(e.target.value)}
-          placeholder='current Stock'
+          placeholder="current Stock"
         />
-        <input type='submit' value='submit' />
+        <input
+          type="text"
+          value={currentStock}
+          onChange={(e) => setOpeningStock(e.target.value)}
+          placeholder="opening Stock"
+        />
+        <input type="submit" value="submit" />
       </form>
     </div>
   );
