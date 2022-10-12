@@ -1,57 +1,60 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from "react";
 
 const Sale = () => {
-  const [name, setName] = useState('');
-  const [response, setResponse] = useState('');
+  const [name, setName] = useState("");
+  const [response, setResponse] = useState("");
 
-  const [date, setDate] = useState('');
-  const [id, setId] = useState('');
+  const [date, setDate] = useState("");
+  const [id, setId] = useState("");
 
-  const [product, setProduct] = useState('');
-  const [openBal, setOpeningBalance] = useState('');
+  const [product, setProduct] = useState("");
+  const [openBal, setOpeningBalance] = useState("");
   // const [discount, setDiscount] = useState('');
-  const [openingStock, setOpeningStock] = useState('');
-  const [full, setFull] = useState('');
-  const [mt, setMt] = useState('');
-  const [mrp, setMrp] = useState('');
-  const [totdis, setTotDis] = useState('');
-  const [totSaleAm, setSaleAm] = useState('');
-  const [cloBal, setCloBal] = useState('');
-  const [deliveryBoy, setDeliveryboy] = useState('');
-  const [area, setArea] = useState('');
-  const [names, setNameData] = useState('');
+  const [openingStock, setOpeningStock] = useState("");
+  const [full, setFull] = useState("");
+  const [mt, setMt] = useState("");
+  const [mrp, setMrp] = useState("");
+  const [totdis, setTotDis] = useState("");
+  const [totSaleAm, setSaleAm] = useState("");
+  const [cloBal, setCloBal] = useState("");
+  const [deliveryBoy, setDeliveryboy] = useState("");
+  const [area, setArea] = useState("");
+  const [names, setNameData] = useState("");
 
   useLayoutEffect(() => {
     const fetchArea = async () => {
-      const response1 = await fetch('http://localhost:8009/api/getparty');
+      const response1 = await fetch("http://localhost:8009/api/getparty");
       const data = await response1.json();
       setNameData(data);
     };
+
     fetchArea();
   }, []);
   // console.log(names);
 
-  const fetchdetails = async (props) => {
-    const url123 = `http://localhost:8009/api/getpartybyid/${props}`;
+  useEffect(() => {
+    const fetchdetails = async (props) => {
+      const url123 = `http://localhost:8009/api/getpartybyid/${props}`;
 
-    console.log(url123);
-    const response2 = await fetch(url123);
-    const data1 = await response2.json();
-    setResponse(data1);
-  };
+      console.log(url123);
+      const response2 = await fetch(url123);
+      const data1 = await response2.json();
+      setResponse(data1);
+    };
+    fetchdetails(id);
+  }, [id]);
 
   return (
     <form>
       {/* onSubmit={addPartys}> */}
 
       <select
-        type='text'
+        type="text"
         value={name}
         onChange={(e) => {
           setId(e.target.value);
-          fetchdetails(id);
         }}
-        placeholder='name'
+        placeholder="name"
       >
         {names &&
           names.map((name1) => (
@@ -61,10 +64,10 @@ const Sale = () => {
           ))}
       </select>
       <input
-        type='date'
+        type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        placeholder='Date'
+        placeholder="Date"
       />
       {/* <input
         type='text'
@@ -73,74 +76,74 @@ const Sale = () => {
         placeholder='date'
       /> */}
       <input
-        type='text'
+        type="text"
         value={response.product}
         onChange={(e) => setProduct(e.target.value)}
-        placeholder='product'
+        placeholder="product"
       />
 
       <input
-        type='text'
+        type="text"
         value={response.closingBalance}
         onChange={(e) => setOpeningBalance(e.target.value)}
-        placeholder='opening balance'
+        placeholder="opening balance"
       />
       <input
-        type='text'
+        type="text"
         value={response.closingStock}
         onChange={(e) => setOpeningStock(e.target.value)}
-        placeholder='opening stock'
+        placeholder="opening stock"
       />
       <input
-        type='text'
+        type="text"
         value={full}
         onChange={(e) => setFull(e.target.value)}
-        placeholder='full'
+        placeholder="full"
       />
       <input
-        type='text'
+        type="text"
         value={mt}
         onChange={(e) => setMt(e.target.value)}
-        placeholder='mt'
+        placeholder="mt"
       />
       <input
-        type='text'
+        type="text"
         value={mrp}
         onChange={(e) => setMrp(e.target.value)}
-        placeholder='mrp'
+        placeholder="mrp"
       />
       <input
-        type='text'
+        type="text"
         value={totdis}
         onChange={(e) => setTotDis(e.target.value)}
-        placeholder='total discount'
+        placeholder="total discount"
       />
-      <input type='text' value={names.discount} placeholder='discount' />
+      <input type="text" value={names.discount} placeholder="discount" />
       <input
-        type='text'
+        type="text"
         value={totSaleAm}
         onChange={(e) => setSaleAm(e.target.value)}
-        placeholder='total sale amount'
+        placeholder="total sale amount"
       />
       <input
-        type='text'
+        type="text"
         value={cloBal}
         onChange={(e) => setCloBal(e.target.value)}
-        placeholder='closing balance'
+        placeholder="closing balance"
       />
       <input
-        type='text'
+        type="text"
         value={response.deliveryBoy}
         onChange={(e) => setDeliveryboy(e.target.value)}
-        placeholder='delivery boy'
+        placeholder="delivery boy"
       />
       <input
-        type='text'
+        type="text"
         value={response.area}
         onChange={(e) => setArea(e.target.value)}
-        placeholder='area'
+        placeholder="area"
       />
-      <input type='submit' value='submit' />
+      <input type="submit" value="submit" />
     </form>
   );
 };
