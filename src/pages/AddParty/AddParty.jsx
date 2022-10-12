@@ -68,7 +68,6 @@ const AddParty = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        img,
         name,
         phoneNumber,
         address,
