@@ -1,37 +1,37 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from "react";
 
 const Sale = () => {
-  const [name, setName] = useState('');
-  const [response, setResponse] = useState('');
+  const [name, setName] = useState("");
+  const [response, setResponse] = useState("");
 
-  const [date, setDate] = useState(new Date());
-  const [id, setId] = useState('');
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [id, setId] = useState("");
 
-  const [product, setProduct] = useState('');
-  const [openBal, setOpeningBalance] = useState('');
+  const [product, setProduct] = useState("");
+  const [openBal, setOpeningBalance] = useState("");
   // const [discount, setDiscount] = useState('');
-  const [openingStock, setOpeningStock] = useState('');
+  const [openingStock, setOpeningStock] = useState("");
   const [deliveryBoyData, setDeliveryBoyData] = useState([]);
-  const [full, setFull] = useState('');
-  const [mt, setMt] = useState('');
-  const [mrp, setMrp] = useState('');
-  const [totdis, setTotDis] = useState('');
-  const [totSaleAm, setSaleAm] = useState('');
-  const [cloBal, setCloBal] = useState('');
-  const [deliveryBoy, setDeliveryboy] = useState('');
-  const [area, setArea] = useState('');
-  const [names, setNameData] = useState('');
-  const [productRes, setProductRes] = useState('');
+  const [full, setFull] = useState("");
+  const [mt, setMt] = useState("");
+  const [mrp, setMrp] = useState("");
+  const [totdis, setTotDis] = useState("");
+  const [totSaleAm, setSaleAm] = useState("");
+  const [cloBal, setCloBal] = useState("");
+  const [deliveryBoy, setDeliveryboy] = useState("");
+  const [area, setArea] = useState("");
+  const [names, setNameData] = useState("");
+  const [productRes, setProductRes] = useState([]);
 
   useLayoutEffect(() => {
     const fetchDelivery = async () => {
-      const response = await fetch('http://localhost:8009/api/getdelivery');
+      const response = await fetch("http://localhost:8009/api/getdelivery");
       const data = await response.json();
       setDeliveryBoyData(data);
     };
     fetchDelivery();
     const fetchArea = async () => {
-      const response1 = await fetch('http://localhost:8009/api/getparty');
+      const response1 = await fetch("http://localhost:8009/api/getparty");
       const data = await response1.json();
       setNameData(data);
     };
@@ -70,30 +70,33 @@ const Sale = () => {
       setResponse(data1);
     };
     const fetchproduct = async () => {
-      const url158 = 'http://localhost:8009/api/getproduct/';
+      const url158 = "http://localhost:8009/api/getproduct/";
       const response3 = await fetch(url158);
       const data3 = await response3.json();
       setProductRes(data3);
     };
-    fetchdetails(id);
-    fetchproduct();
+    if (id !== "") {
+      fetchdetails(id);
+      fetchproduct();
+    }
 
     // console.log(productRes);
   }, [id]);
   useEffect(() => {
-    const product1 = JSON.parse(product);
-    console.log(product1);
-    // console.log(productRes.find((item) => item.id === product));
-  }, [product]);
+    let currentProduct = productRes.find((item) => item._id === product);
+    if (currentProduct) {
+      setMrp(currentProduct.mrp);
+    }
+  }, [product, productRes]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = 'http://localhost:8009/api/addsale';
+    const url = "http://localhost:8009/api/addsale";
 
     const resp = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name,
@@ -117,14 +120,14 @@ const Sale = () => {
   return (
     <form onSubmit={handleSubmit}>
       <select
-        type='text'
+        type="text"
         value={name}
         onChange={(e) => {
           setId(e.target.value);
         }}
-        placeholder='name'
+        placeholder="name"
       >
-        <option disabled value=''>
+        <option disabled value="">
           Select Name
         </option>
         {names &&
@@ -135,10 +138,10 @@ const Sale = () => {
           ))}
       </select>
       <input
-        type='date'
+        type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        placeholder='Date'
+        placeholder="Date"
       />
       {/* <input
         type='text'
@@ -147,92 +150,93 @@ const Sale = () => {
         placeholder='date'
       /> */}
       <select
-        type='text'
+        type="text"
         value={product}
         onChange={(e) => {
           setProduct(e.target.value);
         }}
-        placeholder='product'
+        placeholder="product"
         required
       >
-        <option disabled value=''>
+        <option disabled value="">
           Select
         </option>
         {productRes &&
           productRes.map((product) => (
-            <option value={product._id} key={product._id} id={product.id}>
+            <option value={product._id} key={product._id} id={product._id}>
               {product.name}
             </option>
           ))}
       </select>
 
       <input
-        type='text'
+        type="text"
         value={response.openingBalance}
         onChange={(e) => setOpeningBalance(e.target.value)}
-        placeholder='opening balance'
+        placeholder="opening balance"
         disabled
       />
       <input
-        type='text'
+        type="text"
         value={response.openingStock}
         onChange={(e) => setOpeningStock(e.target.value)}
-        placeholder='opening stock'
+        placeholder="opening stock"
         disabled
       />
       <input
-        type='text'
+        type="text"
         value={full}
         onChange={(e) => setFull(e.target.value)}
-        placeholder='full'
+        placeholder="full"
       />
       <input
-        type='text'
+        type="text"
         value={mt}
         onChange={(e) => setMt(e.target.value)}
-        placeholder='mt'
+        placeholder="mt"
       />
       <input
-        type='text'
+        type="text"
         value={mrp}
         onChange={(e) => setMrp(e.target.value)}
-        placeholder='mrp'
-      />
-      <input
-        type='text'
-        value={response.discount}
-        placeholder='discount'
+        placeholder="mrp"
         disabled
       />
       <input
-        type='text'
+        type="text"
+        value={response.discount}
+        placeholder="discount"
+        disabled
+      />
+      <input
+        type="text"
         value={totdis}
         onChange={(e) => setTotDis(e.target.value)}
-        placeholder='total discount'
+        placeholder="total discount"
         disabled
       />
       <input
-        type='text'
+        type="text"
         value={totSaleAm}
         onChange={(e) => setSaleAm(e.target.value)}
-        placeholder='total sale amount'
+        placeholder="total sale amount"
         disabled
       />
       <input
-        type='text'
+        type="text"
         value={cloBal}
         onChange={(e) => setCloBal(e.target.value)}
-        placeholder='closing balance'
+        placeholder="closing balance"
         disabled
       />
       <select
-        type='text'
+        type="text"
         value={deliveryBoy}
         onChange={(e) => setDeliveryboy(e.target.value)}
-        placeholder='delivery boy'
+        placeholder="delivery boy"
         required
       >
-        <option disabled value=''>
+        <option disabled value="">
           Select
         </option>
         {deliveryBoyData.map((boy) => (
@@ -242,13 +246,13 @@ const Sale = () => {
         ))}
       </select>
       <input
-        type='text'
+        type="text"
         value={response.area}
         onChange={(e) => setArea(e.target.value)}
-        placeholder='area'
+        placeholder="area"
         disabled
       />
-      <input type='submit' value='submit' />
+      <input type="submit" value="submit" />
     </form>
   );
 };
