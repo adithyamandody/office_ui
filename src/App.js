@@ -7,6 +7,7 @@ import Hotel from './pages/hotel/Hotel';
 import List from './pages/list/List';
 import Reciept from './pages/Receipt/Reciept';
 import Sale from './components/Sale/Sale';
+import { AddProduct } from './components/addProduct/addProduct';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route path='/sales' element={<Sale />} />
         <Route path='/receipt' element={<Reciept />} />
         <Route path='/addDelivery' element={<AddDelivery />} />
+        <Route path='/addProduct' element={<AddProduct />} />
+
         <Route path='/addArea' element={<AddArea />} />
       </Routes>
     </BrowserRouter>
