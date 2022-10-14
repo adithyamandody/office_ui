@@ -20,6 +20,7 @@ export const AddProduct = () => {
       },
       body: JSON.stringify({
         name,
+        mrp,
       }),
     });
 
